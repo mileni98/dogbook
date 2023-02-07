@@ -37,8 +37,9 @@ public class UserController {
 	}
 	
     // get all users
-    @GetMapping(
+    @GetMapping(path = "/all",
         produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAll(){
         ArrayList<User> users = userService.getAll();
         if(users.isEmpty())
@@ -49,6 +50,7 @@ public class UserController {
     // get user by username
     @GetMapping(path = "/{username}",
         produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getUser(@PathVariable("username") String username){
         try{
             return new ResponseEntity<User>(userService.findByUsername(username), HttpStatus.OK);    
@@ -60,6 +62,7 @@ public class UserController {
     // delete user by username
     @DeleteMapping(path = "/{username}",
         produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteUser(@PathVariable("username") String username){
         try{
             userService.deleteUser(username);
