@@ -16,24 +16,47 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-	public User findByUsername(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow();
-        if(user == null){
-            throw new IllegalStateException("User does not exist!");
-        }
+    public User findByUsername(String username) {
+        // check if user with the given username exists
+        var user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new IllegalArgumentException("User with username " + username + " doesn't exist!"));
         return user;
     }
 
     @Override
+    public User approve(String username){
+        // check if user exists
+        var existingUser = userRepository.findByUsername(username)
+            .orElseThrow(() -> new IllegalArgumentException("User with username " + username + " doesn't exist!"));
+        existingUser.setApproved(true);
+        return userRepository.save(existingUser);
+    }
+
+    @Override
+    public ArrayList<User> getAll() {
+        ArrayList<User> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new RuntimeException("No users found.");
+        }
+        return users;
+    }
+
+    @Override
+    public ArrayList<User> getAllNonApproved(){
+        ArrayList<User> users = userRepository.findByApprovedFalse();
+        if (users.isEmpty()) {
+            throw new RuntimeException("No users found.");
+        }
+        return users;
+    }
+
+    @Override
     public Boolean deleteUser(String username){
-        User user = this.findByUsername(username);
+        // check if user with the given username exists
+        var user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new IllegalArgumentException("User with username " + username + " doesn't exist!"));
         userRepository.delete(user);
         return true;
     }
     
-    @Override
-    public ArrayList<User> getAll(){
-        return userRepository.findAll();
-    }
-
 }

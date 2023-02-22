@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="color:white;">DogBook</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+
+
+      <ul class="navbar-nav mr-auto" *ngIf="!isLoggedIn">
+         <li class="nav-item active">
+            <a class="nav-link" routerLink="register-user" >Register<span class="sr-only"></span></a>
+         </li>
+         <li class="nav-item active">
+            <a class="nav-link"  routerLink="login">Login<span class="sr-only"></span></a>
+         </li>
+      </ul>
+
+
+      <ul class="navbar-nav mr-auto" *ngIf="isLoggedIn">
+         <li class="nav-item active">
+            <a class="nav-link" routerLink="register-user" >asdsad<span class="sr-only"></span></a>
+         </li>
+         <li class="nav-item active">
+            <a class="nav-link"  routerLink="login">Login<span class="sr-only"></span></a>
+         </li>
+      </ul>
+
+   </div>
+ </nav>

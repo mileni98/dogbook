@@ -16,13 +16,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import smpous.UserService.service.JwtService;
+import smpous.UserService.service.impl.JwtServiceImpl;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  private final JwtService jwtService;
+  private final JwtServiceImpl jwtService;
   private final UserDetailsService userDetailsService;
 
   @Override

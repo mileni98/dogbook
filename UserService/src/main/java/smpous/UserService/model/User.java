@@ -1,6 +1,7 @@
 package smpous.UserService.model;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -32,21 +33,28 @@ public class User implements UserDetails {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  @Column
+  @Column(name = "firstname")
   private String firstname;
 
-  @Column
+  @Column(name = "lastname")
   private String lastname;
   
-  @Column
+  @Column(name = "email")
   private String email;
 
-  @Column 
+  @Column(name = "username")
   private String username;
   
-  @Column
+  @Column(name = "password")
   private String password;
 
+  @Column(name = "approved")
+  private Boolean approved;
+
+  @Column(name = "registration_date")
+  private Date registrationDate;
+
+  @Column(name = "role")
   @Enumerated(EnumType.STRING)
   private Role role;
 
