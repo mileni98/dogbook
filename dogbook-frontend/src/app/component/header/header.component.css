@@ -59,3 +59,11 @@ color: white;
 a {
 color: white;
 }
+
+.nav-list {
+  margin-right: 25px;
+}
+
+.grayed-out::placeholder {
+  color: #c2c2c2;
+}

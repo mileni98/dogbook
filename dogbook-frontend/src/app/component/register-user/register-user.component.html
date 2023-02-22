@@ -1,73 +1,80 @@
 <div class="col-md-12">
-    <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
-      <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required #username="ngModel" placeholder="username"/>
-          <div class="alert-danger" *ngIf="f.submitted && username.invalid">
-            <div *ngIf="username.errors">Username is required</div>
-          </div>
+  <div class="card card-container">
+    <img
+      id="profile-img"
+      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      class="profile-img-card"
+    />
+    <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control grayed-out-placeholder" name="username" [(ngModel)]="form.username" required #username="ngModel" placeholder="username"/>
+        <div class="alert-danger" *ngIf="f.submitted && username.invalid">
+          <div *ngIf="username.errors?.['required']">Username is required!</div>
         </div>
-  
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required #password="ngModel" placeholder="password"/>
-          <div class="alert-danger" *ngIf="f.submitted && password.invalid">
-            <div *ngIf="password.errors">Password is required</div>
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label for="passwordConf">Confirm password</label>
-          <input type="password" class="form-control" name="passwordConf" [(ngModel)]="form.passwordConf" required minlength="6" #passwordConf="ngModel" placeholder="confirm password"/>
-          <div class="alert-danger" *ngIf="f.submitted && passwordConf.invalid">
-            <div *ngIf="passwordConf.errors">Password is required</div>
-            <div *ngIf="password!==passwordConf"> Password & Confirm Password does not match.</div>
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" name="name" [(ngModel)]="form.name" required #name="ngModel" placeholder="name"/>
-          <div class="alert-danger" *ngIf="f.submitted && name.invalid">
-            <div *ngIf="name.errors">Name is required</div>
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label for="surname">Surname</label>
-          <input type="text" class="form-control" name="surname" [(ngModel)]="form.surname" required #surname="ngModel" placeholder="surname"/>
-          <div class="alert-danger" *ngIf="f.submitted && surname.invalid">
-            <div *ngIf="surname.errors">Surname is required</div>
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email #email="ngModel" placeholder="email"/>
-          <div class="alert-danger" *ngIf="f.submitted && email.invalid">
-            <div *ngIf="email.errors">Email is required</div>
-          </div>
-        </div>
-  
-  
-        <div class="form-group">
-          <button class="btn btn-primary btn-block">Confirm registration</button>
-        </div>
-  
-        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-          Signup failed!<br />{{ errorMessage }}
-        </div>
-      </form>
-  
-      <div class="alert alert-success" *ngIf="isSuccessful">
-        Your registration is successful!
       </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control grayed-out-placeholder" name="password" [(ngModel)]="form.password" required minlength="4" #password="ngModel" placeholder="password"/>
+        <div class="alert-danger" *ngIf="f.submitted && password.invalid">
+          <div *ngIf="password.errors?.['required']">Password is required!</div>
+          <div *ngIf="password.errors?.['minlength']">Password must be at least 4 characters!</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="firstname">First name</label>
+        <input type="text" class="form-control grayed-out-placeholder" name="firstname" [(ngModel)]="form.firstname" required #firstname="ngModel" placeholder="firstname"/>
+        <div class="alert-danger" *ngIf="f.submitted && firstname.invalid">
+          <div *ngIf="firstname.errors?.['required']">First name is required!</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="lastname">Last name</label>
+        <input type="text" class="form-control grayed-out-placeholder" name="lastname" [(ngModel)]="form.lastname" required #lastname="ngModel" placeholder="lastname"/>
+        <div class="alert-danger" *ngIf="f.submitted && lastname.invalid">
+          <div *ngIf="lastname.errors?.['required']">Last name is required!</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control grayed-out-placeholder" name="email" [(ngModel)]="form.email" required email #email="ngModel" placeholder="email"/>
+        <div class="alert-danger" *ngIf="f.submitted && email.invalid">
+          <div *ngIf="email.errors?.['required']">Email is required!</div>
+          <div *ngIf="email.errors?.['email']">Email must be a valid email address!</div>
+        </div>
+      </div>
+      
+      
+
+      <!--
+      <div class="form-group">
+        <label for="passwordConf">Confirm password</label>
+        <input type="password" class="form-control grayed-out-placeholder" name="passwordConf" [(ngModel)]="form.passwordConf" required minlength="4" #passwordConf="ngModel" placeholder="confirm password"/>
+        <div class="alert-danger" *ngIf="f.submitted && passwordConf.invalid">
+          <div *ngIf="passwordConf.errors?.['required']">Password is required!</div>
+          <div *ngIf="passwordConf.errors?.['minlength']">Password must be at least 4 characters!</div>
+          <div *ngIf="passwordConf.errors?.['passwordMismatch']">Password miss!</div>
+        </div>
+      </div>
+      -->
+    
+
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Confirm registration</button>
+      </div>
+
+      <div class="alert alert-warning center-text " *ngIf="f.submitted && isSignUpFailed">
+        Signup failed!<br />{{ errorMessage }}
+      </div>
+    </form>
+
+    <div class="alert alert-success center-text " *ngIf="isSuccessful">
+      Your registration is successful!
     </div>
   </div>
-  
+</div>

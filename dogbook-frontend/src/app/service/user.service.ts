@@ -16,11 +16,15 @@ export class UserService {
     constructor(private http: HttpClient) {}
 
     public getAll(): Observable<User[]> {
-        return this.http.get<User[]>(this.apiServerUrl + '/user/all');
+        return this.http.get<User[]>(this.apiServerUrl + '/users/all');
+    }
+
+    public getAllNonApproved(): Observable<User[]> {
+        return this.http.get<User[]>(this.apiServerUrl + '/users/all-non-approved');
     }
     
-    public registerUser(user : User): Observable<User> {
-        return this.http.post<User>(this.apiServerUrl + '/auth/register', user, httpOptions);
+    public getOwner(ownerUsername : string): Observable<User> {
+        return this.http.get<User>(this.apiServerUrl + '/users/${ownerUsername}');
     }
 
 }
