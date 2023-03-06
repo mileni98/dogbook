@@ -59,7 +59,7 @@ public class UserController {
     // get all non approved users
     @GetMapping(path = "/all-non-approved",
         produces = MediaType.APPLICATION_JSON_VALUE)
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAllNonApproved(){
         try {
             return new ResponseEntity<ArrayList<User>>(userService.getAllNonApproved(), HttpStatus.OK);
@@ -88,7 +88,7 @@ public class UserController {
     @PutMapping(path = "/approve",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> approveRegistration(@RequestBody User user){
         try {
             return new ResponseEntity<User>(userService.approve(user), HttpStatus.OK);

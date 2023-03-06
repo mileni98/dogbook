@@ -66,7 +66,6 @@ export class ApproveRegistrationComponent implements OnInit{
       }
     );
 
-   
   }
 
   public searchUsers(key: string): void {

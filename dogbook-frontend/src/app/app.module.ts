@@ -12,6 +12,8 @@ import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { ApproveRegistrationComponent } from './component/approve-registration/approve-registration.component';
 import { AdminGuard } from './component/guard/admin.guard';
+import { NotFoundComponent } from './component/not-found/not-found.component';
+import { ForbiddenComponent } from './component/forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { AdminGuard } from './component/guard/admin.guard';
     HeaderComponent,
     HomeComponent,
     LoginComponent,
-    ApproveRegistrationComponent
+    ApproveRegistrationComponent,
+    NotFoundComponent,
+    ForbiddenComponent
   ],
   imports: [
     FormsModule,
