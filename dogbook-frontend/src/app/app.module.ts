@@ -10,6 +10,8 @@ import { RegisterUserComponent } from './component/register-user/register-user.c
 import { HeaderComponent } from './component/header/header.component';
 import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
+import { ApproveRegistrationComponent } from './component/approve-registration/approve-registration.component';
+import { AdminGuard } from './component/guard/admin.guard';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { LoginComponent } from './component/login/login.component';
     RegisterUserComponent,
     HeaderComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    ApproveRegistrationComponent
   ],
   imports: [
     FormsModule,
@@ -25,7 +28,7 @@ import { LoginComponent } from './component/login/login.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

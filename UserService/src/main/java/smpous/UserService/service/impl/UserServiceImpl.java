@@ -24,12 +24,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User approve(String username){
-        // check if user exists
-        var existingUser = userRepository.findByUsername(username)
-            .orElseThrow(() -> new IllegalArgumentException("User with username " + username + " doesn't exist!"));
-        existingUser.setApproved(true);
-        return userRepository.save(existingUser);
+    public User approve(User editedUser){
+        User existingUser = userRepository.getById(editedUser.getId());
+        if (existingUser == null){
+            throw new IllegalStateException("User does not exist!");
+        } else {
+            existingUser.setApproved(true);
+            return userRepository.save(existingUser);
+        }
     }
 
     @Override

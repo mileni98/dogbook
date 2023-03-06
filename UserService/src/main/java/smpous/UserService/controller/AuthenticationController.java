@@ -15,7 +15,7 @@ import smpous.UserService.auth.RegisterRequest;
 import smpous.UserService.service.AuthenticationService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
 

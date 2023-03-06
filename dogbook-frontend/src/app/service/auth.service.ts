@@ -17,7 +17,7 @@ export class AuthService {
     constructor(private http: HttpClient) {}
 
     public register(user : User): Observable<User> {
-      let path = '/auth/register';
+      let path = '/api/v1/auth/register';
       return this.http.post<User>(this.apiServerUrl + path, user, httpOptions)
        .pipe(
         catchError((error) => {
@@ -28,8 +28,8 @@ export class AuthService {
     }
 
     public authenticate(credentials: any): Observable<any> {
-      let path = '/auth/authenticate';
-      return this.http.post(this.apiServerUrl + '/auth/authenticate', {
+      let path = '/api/v1/auth/authenticate';
+      return this.http.post(this.apiServerUrl + path, {
         username: credentials.username,
         password: credentials.password
       }, httpOptions).pipe(
@@ -45,13 +45,13 @@ export class AuthService {
       
       if (error instanceof HttpErrorResponse) {
         switch (path) {
-          case '/auth/register':
+          case '/api/v1/auth/register':
             if (error.status === 400) {
               errorMessage = 'User with this username already exist! Please try again.';
             } 
             break;
 
-          case '/auth/authenticate':
+          case '/api/v1/auth/authenticate':
             if (error.status === 400) {
               errorMessage = 'Invalid authentication credentials. Please try again.';
             } else if (error.status === 403) {

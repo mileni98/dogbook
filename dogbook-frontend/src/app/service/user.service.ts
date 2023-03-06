@@ -16,15 +16,19 @@ export class UserService {
     constructor(private http: HttpClient) {}
 
     public getAll(): Observable<User[]> {
-        return this.http.get<User[]>(this.apiServerUrl + '/users/all');
+        return this.http.get<User[]>(this.apiServerUrl + '/api/v1/users/all');
     }
 
     public getAllNonApproved(): Observable<User[]> {
-        return this.http.get<User[]>(this.apiServerUrl + '/users/all-non-approved');
+        return this.http.get<User[]>(this.apiServerUrl + '/api/v1/users/all-non-approved');
     }
     
     public getOwner(ownerUsername : string): Observable<User> {
-        return this.http.get<User>(this.apiServerUrl + '/users/${ownerUsername}');
+        return this.http.get<User>(this.apiServerUrl + '/api/v1/users/${ownerUsername}');
+    }
+
+    public approveUser(user : User): Observable<User> {
+        return this.http.put<User>(this.apiServerUrl + '/api/v1/users/approve', user);
     }
 
 }

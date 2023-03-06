@@ -8,18 +8,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import smpous.UserService.model.User;
 import smpous.UserService.service.UserService;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
     
     @Autowired
@@ -56,7 +59,7 @@ public class UserController {
     // get all non approved users
     @GetMapping(path = "/all-non-approved",
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAllNonApproved(){
         try {
             return new ResponseEntity<ArrayList<User>>(userService.getAllNonApproved(), HttpStatus.OK);
@@ -82,12 +85,13 @@ public class UserController {
     }
 
     // approve users registration
-    @PutMapping(path = "/{username}/approve",
+    @PutMapping(path = "/approve",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> approveRegistration(@PathVariable("username") String username){
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> approveRegistration(@RequestBody User user){
         try {
-            return new ResponseEntity<User>(userService.approve(username), HttpStatus.OK);
+            return new ResponseEntity<User>(userService.approve(user), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
