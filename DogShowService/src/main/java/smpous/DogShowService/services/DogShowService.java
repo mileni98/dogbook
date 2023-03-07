@@ -11,5 +11,6 @@ public interface DogShowService {
     public Boolean deleteDogShow(String id);
     public ArrayList<DogShow> getAll();
     public DogShow save(DogShow dogShow);
+    public void deleteAll();
     
 }

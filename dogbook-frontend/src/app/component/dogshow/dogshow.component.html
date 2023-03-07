@@ -1,0 +1,117 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+   <a class="navbar-brand" style="color:white;">Dog Shows</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+   </button>
+   <div class="collapse navbar-collapse " id="navbarColor02">
+      <ul class="navbar-nav ml-auto ">
+         <li class="nav-item active nav-list " *ngIf="isLoggedIn && role==='ADMIN'">
+            <button class="btn btn-primary btn-block" (click)="onOpenModal(null, 'add')" data-toggle="modal" data-target="#addDogShowModal" >Add dogshow<span class="sr-only">(current)</span></button>
+         </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0 ">
+         <input type="search" (ngModelChange)="searchDogShows(key.value)"  #key="ngModel" ngModel name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search dog shows..." required>
+      </form>
+   </div>
+</nav>
+
+<div class="container" id="main-container">
+   <div class="row">
+      <div *ngFor="let dogshow of sortData()" class="col-md-6 col-xl-3">
+         <div class="card m-b-30">
+            <div class="card-body row">
+               <div class="col-6 card-title align-self-center mb-0">
+                  <h5>{{dogshow?.name}}</h5>
+                  <p class="m-0"></p>
+              </div>
+            </div>
+            <ul class="list-group list-group-flush">
+               <li class="list-group-item"><i class="fa fa-phone float-right"></i>Location : {{dogshow?.location}}</li>
+               <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Date: {{ dogshow?.date | date:'dd/MM/yyyy HH:mm' }}</li>
+               <li class="list-group-item"><i class="fa fa-phone float-right"></i>Maximum Score : {{dogshow?.maximumScore}}</li>
+            </ul>
+            <div class="card-body">
+               <div class="float-right btn-group btn-group-sm">
+                  <a class="btn btn-primary tooltips" *ngIf="isLoggedIn && role==='OWNER'" (click)="onOpenModalDogs(dogshow, 'showDogs')" data-toggle="modal" data-target="#showDogsModal" data-placement="top" data-original-title="ShowDogs" style="margin-right:5px"><i class="fa fa-pencil"> See contestants</i> </a>
+                  <a class="btn btn-primary tooltips" *ngIf="isLoggedIn && role==='OWNER'" data-toggle="modal"  data-placement="top" data-original-title="ShowDogs" style="margin-right:5px"><i class="fa fa-pencil"> Register dog</i> </a>
+                  <a class="btn btn-primary tooltips"  *ngIf="isLoggedIn && role==='ADMIN' && dogshow.finished" (click)="onOpenModalDogs(dogshow, 'showDogs')" data-toggle="modal" data-target="#showDogsModal" data-placement="top" data-original-title="ShowDogs" style="margin-right:5px"><i class="fa fa-pencil"> See contestants</i> </a>
+                  <a class="btn btn-danger tooltips"  *ngIf="isLoggedIn && role==='ADMIN' && !dogshow.finished" (click)="onOpenModalDogs(dogshow, 'showDogs')" data-placement="top" data-target="#showDogsModal" data-original-title="ShowDogs"><i class="fa fa-times"> Close show</i></a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+  
+  <!-- Add DogShow Modal  -->
+   <div class="modal fade" *ngIf="isLoggedIn && role==='ADMIN'" id="addDogShowModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true" >
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addEmployeeModalLabel" >Add DogShow</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form #addForm="ngForm" (ngSubmit)="onAddDogShow(addForm)">
+                  <div class="form-group">
+                     <label for="name">Name</label>
+                     <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Name" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="location">Location</label>
+                     <input type="text" ngModel name="location" class="form-control" id="location" placeholder="Location" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="date">Date and Time</label>
+                     <input type="datetime-local" ngModel name="date" class="form-control" id="date" placeholder="Date and Time" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="maximumScore">Maximum score</label>
+                     <input type="number" ngModel name="maximumScore" class="form-control" id="maximumScore" placeholder="Maximum Score" required>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" id="add-dogshow-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- See dogs in DogShow Modal -->
+   <div class="modal fade" id="showDogsModal" tabindex="-1" role="dialog" aria-labelledby="showDogsModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="showDogsModalLabel">All participating dogs</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+         <div class="modal-body">
+            <table class="table table-striped">
+               <thead>
+                  <tr>
+                     <th scope="row">Name</th>
+                     <th scope="row">Race</th>
+                     <th *ngIf="isLoggedIn && role==='ADMIN' && !seeDogshow.finished" scope="row">Score</th>
+                  </tr>
+               </thead>             
+            </table>
+            <div class="d-flex justify-content-center text-center mt-3">
+               <button type="button" class="btn btn-success" (click)="onUpdateDogShow(seeDogshow)">Save Scores</button>
+            </div> 
+         </div>
+      </div>
+   </div>
+
+   <!-- Notification for no dog shows -->
+   <div *ngIf="dogshows?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+      <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">NO DOG SHOWS!</h4>
+      <p>No Dog shows were found.</p>
+   </div>
+
+</div>

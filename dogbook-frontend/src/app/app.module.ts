@@ -15,6 +15,7 @@ import { AdminGuard } from './component/guard/admin.guard';
 import { NotFoundComponent } from './component/not-found/not-found.component';
 import { ForbiddenComponent } from './component/forbidden/forbidden.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { DogshowComponent } from './component/dogshow/dogshow.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     LoginComponent,
     ApproveRegistrationComponent,
     NotFoundComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    DogshowComponent
   ],
   imports: [
     FormsModule,

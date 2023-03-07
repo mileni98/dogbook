@@ -1,6 +1,7 @@
 package smpous.DogShowService.controller;
 
 import java.util.ArrayList;
+import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,24 @@ public class DogShowController {
 
     @Autowired
     private DogShowService dogShowService;
+
+    @RequestMapping("/reset_repo")
+    public String home() {
+
+        dogShowService.deleteAll();
+
+        DogShow tmp = new DogShow();
+        tmp.setId("1");
+        tmp.setName("CACIB");
+        tmp.setLocation("Novi Sad");
+        tmp.setDate(Date.valueOf("2023-01-01"));
+        tmp.setMaximumScore(10);
+        tmp.setClosed(false);
+        tmp.setFinished(false);
+        dogShowService.save(tmp);
+
+        return tmp.toString();
+    }
 
     // get all dog shows
     @GetMapping(value = "/all", 

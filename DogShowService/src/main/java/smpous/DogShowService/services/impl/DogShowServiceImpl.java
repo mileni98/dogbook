@@ -62,5 +62,9 @@ public class DogShowServiceImpl implements DogShowService{
         }
     }
 
+    @Override
+    public void deleteAll(){
+        dogShowRepository.deleteAll();
+    }
 
 }
