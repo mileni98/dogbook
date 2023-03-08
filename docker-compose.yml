@@ -19,3 +19,48 @@ services:
       - POSTGRES_PASSWORD=compose-postgres
     ports:
       - "5432:5432"
+
+  dog-services:
+    image: smpous_dog_service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_NEO4J_URI=bolt://neo:7687
+      - SPRING_NEO4J_AUTHENTICATION_USERNAME=neo4j
+      - SPRING_NEO4J_AUTHENTICATION_PASSWORD=password
+    depends_on:
+      - neo
+
+  neo:
+    image: neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    restart: unless-stopped
+    environment:
+      - NEO4J_AUTH=neo4j/password
+
+  dogshow-services:
+    image: smpous_dogshow_service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/mongo_db
+      #- SPRING_DATA_MONGODB_USERNAME=user
+      #- SPRING_DATA_MONGODB_PASSWORD=pass
+
+  mongodb:
+    image: 'mongo:4.4'
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=mongo_db
+      #- MONGO_INITDB_ROOT_USERNAME=user
+      #- MONGO_INITDB_ROOT_PASSWORD=pass
+    ports:
+      - "27017:27017"
+
+      

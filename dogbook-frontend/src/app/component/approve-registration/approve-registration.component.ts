@@ -22,9 +22,8 @@ export class ApproveRegistrationComponent implements OnInit{
 
   constructor(private userService: UserService, private tokenStorageService: TokenStorageService) {}
 
- 
-
-  ngOnInit(): void {
+  
+   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       this.role = this.tokenStorageService.getUserRole();
